@@ -25,7 +25,7 @@ public interface ICBankPropertiesStub {
 			@CjStubInParameter(key = "key", usage = "key") String key);
 
 	@CjStubMethod(usage = "获取属性")
-	String[] enumKey(String bank);
+	String[] enumKey(@CjStubInParameter(key="bank", usage = "合约银行编号") String bank);
 
 	@CjStubMethod(usage = "获取一页属性")
 	String[] pageKeys(@CjStubInParameter(key="bank", usage = "合约银行编号") String bank,

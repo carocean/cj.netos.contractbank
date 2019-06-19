@@ -7,7 +7,7 @@ import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.gateway.stub.GatewayAppSiteRestStub;
 @CjService(name="/properties.service")
 public class CBankPropertiesStub extends GatewayAppSiteRestStub implements ICBankPropertiesStub {
-	@CjServiceRef(refByName = "MarketEngine.cbankPropertiesBS")
+	@CjServiceRef(refByName = "CoreEngine.cbankPropertiesBS")
 	ICBankPropertiesBS cbankPropertiesBS;
 	@Override
 	public void put(String bank, String key, String value,String desc) {

@@ -2,20 +2,20 @@ package cj.netos.contractbank.bs;
 
 public interface ICBankPropertiesBS {
 	static String TABLE_KEY="properties";
-	void put(String market, String key, String value,String desc);
+	void put(String bank, String key, String value,String desc);
 
-	void remove(String market, String key);
+	void remove(String bank, String key);
 
-	boolean containsKey(String market, String key);
+	boolean containsKey(String bank, String key);
 
-	String get(String market, String key);
+	String get(String bank, String key);
 
-	String[] enumKey(String market);
+	String[] enumKey(String bank);
 
-	String[] pageKeys(String market, int currPage, int pageSize);
+	String[] pageKeys(String bank, int currPage, int pageSize);
 
-	long count(String market);
+	long count(String bank);
 
-	String desc(String market, String key);
+	String desc(String bank, String key);
 
 }

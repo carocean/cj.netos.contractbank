@@ -12,14 +12,14 @@ import cj.netos.contractbank.plugin.CoreEngine.db.ICBankStore;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
 
-@CjService(name = "marketPropertiesBS")
+@CjService(name = "cbankPropertiesBS")
 public class CBankPropertiesBS implements ICBankPropertiesBS {
 	@CjServiceRef
-	ICBankStore cbankStore;
+	ICBankStore bankStore;
 
 	@Override
 	public void remove(String bank, String key) {
-		cbankStore.home().deleteDocOne(TABLE_KEY, String.format("{'tuple.market':'%s','tuple.key':'%s'}", bank, key));
+		bankStore.home().deleteDocOne(TABLE_KEY, String.format("{'tuple.bank':'%s','tuple.key':'%s'}", bank, key));
 	}
 
 	@Override
@@ -28,20 +28,20 @@ public class CBankPropertiesBS implements ICBankPropertiesBS {
 			remove(bank, key);
 		}
 		CBankProperty property = new CBankProperty(bank, key, value, desc);
-		cbankStore.home().saveDoc(TABLE_KEY, new TupleDocument<>(property));
+		bankStore.home().saveDoc(TABLE_KEY, new TupleDocument<>(property));
 	}
 
 	@Override
 	public boolean containsKey(String bank, String key) {
-		return cbankStore.home().tupleCount(TABLE_KEY, String.format("{'tuple.market':'%s','tuple.key':'%s'}", bank, key)) > 0;
+		return bankStore.home().tupleCount(TABLE_KEY, String.format("{'tuple.bank':'%s','tuple.key':'%s'}", bank, key)) > 0;
 	}
 
 	@Override
 	public String desc(String bank, String key) {
 		String cjql = String.format(
-				"select {'tuple.desc':1} from tuple %s %s where {'tuple.market':'%s','tuple.key':'%s'}", TABLE_KEY,
+				"select {'tuple.desc':1} from tuple %s %s where {'tuple.bank':'%s','tuple.key':'%s'}", TABLE_KEY,
 				CBankProperty.class.getName(), bank, key);
-		IQuery<CBankProperty> q = cbankStore.home().createQuery(cjql);
+		IQuery<CBankProperty> q = bankStore.home().createQuery(cjql);
 		IDocument<CBankProperty> doc = q.getSingleResult();
 		if (doc == null)
 			return null;
@@ -50,9 +50,9 @@ public class CBankPropertiesBS implements ICBankPropertiesBS {
 
 	@Override
 	public String get(String bank, String key) {
-		String cjql = String.format("select {'tuple.value':1} from tuple %s %s where {'tuple.market':'%s','tuple.key':'%s'}",
+		String cjql = String.format("select {'tuple.value':1} from tuple %s %s where {'tuple.bank':'%s','tuple.key':'%s'}",
 				TABLE_KEY, CBankProperty.class.getName(), bank, key);
-		IQuery<CBankProperty> q = cbankStore.home().createQuery(cjql);
+		IQuery<CBankProperty> q = bankStore.home().createQuery(cjql);
 		IDocument<CBankProperty> doc = q.getSingleResult();
 		if (doc == null)
 			return null;
@@ -61,9 +61,9 @@ public class CBankPropertiesBS implements ICBankPropertiesBS {
 
 	@Override
 	public String[] enumKey(String bank) {
-		String cjql = String.format("select {'tuple.key':1} from tuple %s %s where {'tuple.market':'%s'}", TABLE_KEY,
+		String cjql = String.format("select {'tuple.key':1} from tuple %s %s where {'tuple.bank':'%s'}", TABLE_KEY,
 				CBankProperty.class.getName(), bank);
-		IQuery<CBankProperty> q = cbankStore.home().createQuery(cjql);
+		IQuery<CBankProperty> q = bankStore.home().createQuery(cjql);
 		List<String> list = new ArrayList<String>();
 		List<IDocument<CBankProperty>> docs = q.getResultList();
 		for (IDocument<CBankProperty> doc : docs) {
@@ -75,9 +75,9 @@ public class CBankPropertiesBS implements ICBankPropertiesBS {
 	@Override
 	public String[] pageKeys(String bank, int currPage, int pageSize) {
 		String cjql = String.format(
-				"select {'tuple.key':1}.limit(%s).skip(%s) from tuple %s %s where {'tuple.market':'%s'}", pageSize,
+				"select {'tuple.key':1}.limit(%s).skip(%s) from tuple %s %s where {'tuple.bank':'%s'}", pageSize,
 				currPage, TABLE_KEY, CBankProperty.class.getName(), bank);
-		IQuery<CBankProperty> q = cbankStore.home().createQuery(cjql);
+		IQuery<CBankProperty> q = bankStore.home().createQuery(cjql);
 		List<String> list = new ArrayList<String>();
 		List<IDocument<CBankProperty>> docs = q.getResultList();
 		for (IDocument<CBankProperty> doc : docs) {
@@ -88,7 +88,7 @@ public class CBankPropertiesBS implements ICBankPropertiesBS {
 
 	@Override
 	public long count(String bank) {
-		return cbankStore.home().tupleCount(TABLE_KEY, String.format("{'tuple.market':'%s'}", bank));
+		return bankStore.home().tupleCount(TABLE_KEY, String.format("{'tuple.bank':'%s'}", bank));
 	}
 
 }

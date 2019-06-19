@@ -15,14 +15,14 @@ import cj.netos.contractbank.plugin.CoreEngine.db.ICBankStore;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
 
-@CjService(name = "CBankStateBS")
+@CjService(name = "cbankStateBS")
 public class CBankStateBS implements ICBankStateBS {
 	@CjServiceRef
-	ICBankStore cbankStore;
+	ICBankStore bankStore;
 	@Override
 	public void save(CBankState state) {
 		state.setId(null);
-		String id = cbankStore.home().saveDoc(TABLE_CBank_STATE, new TupleDocument<>(state));
+		String id = bankStore.home().saveDoc(TABLE_CBank_STATE, new TupleDocument<>(state));
 		state.setId(id);
 
 	}
@@ -30,7 +30,7 @@ public class CBankStateBS implements ICBankStateBS {
 	@Override
 	public CBankState getState(String bank) {
 		String cjql = "select {'tuple':'*'} from tuple ?(colName) ?(colType) where {'tuple.bank':'?(bank)'}";
-		IQuery<CBankState> q = cbankStore.home().createQuery(cjql);
+		IQuery<CBankState> q = bankStore.home().createQuery(cjql);
 		q.setParameter("colName", TABLE_CBank_STATE);
 		q.setParameter("colType", CBankState.class.getName());
 		q.setParameter("bank",bank);
@@ -51,7 +51,7 @@ public class CBankStateBS implements ICBankStateBS {
 		Bson update = Document.parse(String.format("{'$set':{'tuple.state':'%s'}}", BState.revoke));
 		UpdateOptions uo = new UpdateOptions();
 		uo.upsert(true);
-		cbankStore.home().updateDocOne(TABLE_CBank_STATE, filter, update, uo);
+		bankStore.home().updateDocOne(TABLE_CBank_STATE, filter, update, uo);
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class CBankStateBS implements ICBankStateBS {
 		Bson update = Document.parse(String.format("{'$set':{'tuple.state':'%s'}}", BState.freeze));
 		UpdateOptions uo = new UpdateOptions();
 		uo.upsert(true);
-		cbankStore.home().updateDocOne(TABLE_CBank_STATE, filter, update, uo);
+		bankStore.home().updateDocOne(TABLE_CBank_STATE, filter, update, uo);
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class CBankStateBS implements ICBankStateBS {
 		Bson update = Document.parse(String.format("{'$set':{'tuple.state':'%s'}}", BState.closed));
 		UpdateOptions uo = new UpdateOptions();
 		uo.upsert(true);
-		cbankStore.home().updateDocOne(TABLE_CBank_STATE, filter, update, uo);
+		bankStore.home().updateDocOne(TABLE_CBank_STATE, filter, update, uo);
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class CBankStateBS implements ICBankStateBS {
 		Bson update = Document.parse(String.format("{'$set':{'tuple.state':'%s'}}", BState.opened));
 		UpdateOptions uo = new UpdateOptions();
 		uo.upsert(true);
-		cbankStore.home().updateDocOne(TABLE_CBank_STATE, filter, update, uo);
+		bankStore.home().updateDocOne(TABLE_CBank_STATE, filter, update, uo);
 	}
 
 }
