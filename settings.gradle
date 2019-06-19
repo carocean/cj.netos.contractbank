@@ -1,0 +1,7 @@
+include "cj.netos.contractbank.program"
+include "cj.netos.contractbank.main"
+include "cj.netos.contractbank.plugin.MaxEngine"
+include "cj.netos.contractbank.plugin.MinEngine"
+include "cj.netos.contractbank.plugin.ProcurementEngine"
+include "cj.netos.contractbank.plugin.CoreEngine"
+include "cj.netos.contractbank.stub"

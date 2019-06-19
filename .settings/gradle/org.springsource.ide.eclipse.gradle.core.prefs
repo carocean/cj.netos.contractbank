@@ -1,0 +1,5 @@
+#org.springsource.ide.eclipse.gradle.core.preferences.GradleProjectPreferences
+#Wed Jun 19 19:48:13 CST 2019
+build.family.org.gradle.tooling.model.eclipse.HierarchicalEclipseProject=;cj.netos.contractbank.main;cj.netos.contractbank.plugin.CoreEngine;cj.netos.contractbank.plugin.MaxEngine;cj.netos.contractbank.plugin.MinEngine;cj.netos.contractbank.plugin.ProcurementEngine;cj.netos.contractbank.program;cj.netos.contractbank.stub;
+org.springsource.ide.eclipse.gradle.linkedresources=
+org.springsource.ide.eclipse.gradle.rootprojectloc=
