@@ -15,7 +15,6 @@ public interface ICBankTransactionStub {
 	void putonOrder(@CjStubInParameter(key = "bank", usage = "合约银行行号") String bank,
 			@CjStubInParameter(key = "putter", usage = "委托投单者编号") String putter,
 			@CjStubInParameter(key = "what", usage = "投放的东西。可能是商品编号也可能是需求编号") String what,
-			@CjStubInParameter(key = "units", usage = "单位") String units,
 			@CjStubInParameter(key = "unitPrice", usage = "单价") BigDecimal unitPrice,
 			@CjStubInParameter(key = "thingsQuantities", usage = "委托投放的东西数量") long thingsQuantities,
 			@CjStubInParameter(key = "informAddress", usage = "回调通知地址") String informAddress);
@@ -25,7 +24,7 @@ public interface ICBankTransactionStub {
 	void buyOrder(@CjStubInParameter(key = "bank", usage = "合约银行行号") String bank,
 			@CjStubInParameter(key = "buyer", usage = "委托买入者编号") String buyer,
 			@CjStubInParameter(key = "position", usage = "开平仓。注意：小额交易规则不支持平仓") Position position,
-			@CjStubInParameter(key = "amount", usage = "委托申购金额") BigDecimal amount,
+			@CjStubInParameter(key = "thingsQuantities", usage = "委托申购数量") long thingsQuantities,
 			@CjStubInParameter(key = "buyingPrice", usage = "委托申购价格") BigDecimal buyingPrice,
 			@CjStubInParameter(key = "informAddress", usage = "回调通知地址") String informAddress);
 

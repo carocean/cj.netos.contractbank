@@ -2,6 +2,9 @@ package cj.netos.contractbank.args;
 
 public class CBankProperty {
 	public static transient final String CONSTANS_KEY_default_putonCashDepositRate = "defaults.putonCashDepositRate";
+	public static transient final String CONSTANS_KEY_default_sellCashDepositRate = "defaults.sellCashDepositRate";
+	public static transient final String CONSTANS_KEY_default_buyCashDepositRate = "defaults.buyCashDepositRate";
+	public static transient final String CONSTANS_KEY_default_exchangeFeeRate = "defaults.exchangeFeeRate";
 	String key;
 	String value;
 	String desc;

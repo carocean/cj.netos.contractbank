@@ -25,28 +25,27 @@ public class CBankTransactionStub extends GatewayAppSiteRestStub implements ICBa
 	}
 
 	@Override
-	public void putonOrder(String bank, String putter, String what,String units, BigDecimal unitPrice, long thingsQuantities,
+	public void putonOrder(String bank, String putter, String what, BigDecimal unitPrice, long thingsQuantities,
 			String informAddress) {
 		IReactor reactor = getReactor();
 		Event e = new Event(bank, "transaction.putonOrder");
 		e.getParameters().put("informAddress", informAddress);
 		e.getParameters().put("putter", putter);
 		e.getParameters().put("what", what);
-		e.getParameters().put("units", units);
 		e.getParameters().put("unitPrice", unitPrice);
 		e.getParameters().put("thingsQuantities", thingsQuantities);
 		reactor.input(e);
 	}
 
 	@Override
-	public void buyOrder(String bank, String buyer, Position position, BigDecimal amount, BigDecimal buyingPrice,
+	public void buyOrder(String bank, String buyer, Position position, long thingsQuantities, BigDecimal buyingPrice,
 			String informAddress) {
 		IReactor reactor = getReactor();
 		Event e = new Event(bank, "transaction.buyOrder");
 		e.getParameters().put("informAddress", informAddress);
 		e.getParameters().put("buyer", buyer);
 		e.getParameters().put("position", position);
-		e.getParameters().put("amount", amount);
+		e.getParameters().put("thingsQuantities", thingsQuantities);
 		e.getParameters().put("buyingPrice", buyingPrice);
 		reactor.input(e);
 	}

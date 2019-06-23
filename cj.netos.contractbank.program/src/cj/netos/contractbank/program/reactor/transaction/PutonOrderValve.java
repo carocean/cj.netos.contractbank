@@ -21,10 +21,9 @@ public class PutonOrderValve implements IValve {
 		String putter = (String) e.getParameters().get("putter");
 		String informAddress = (String) e.getParameters().get("informAddress");
 		String what = (String) e.getParameters().get("what");
-		String units = (String) e.getParameters().get("units");
 		BigDecimal unitPrice = (BigDecimal) e.getParameters().get("unitPrice");
 		long thingsQuantities = (long) e.getParameters().get("thingsQuantities");
-		cbankPutonOrderBS.puton(e.getKey(), putter, what, units, unitPrice, thingsQuantities, informAddress);
+		cbankPutonOrderBS.puton(e.getKey(), putter, what, unitPrice, thingsQuantities, informAddress);
 
 	}
 

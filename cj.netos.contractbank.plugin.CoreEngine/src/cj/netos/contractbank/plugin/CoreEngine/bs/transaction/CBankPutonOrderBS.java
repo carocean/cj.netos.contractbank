@@ -47,7 +47,7 @@ public class CBankPutonOrderBS implements ICBankPutonOrderBS, BigDecimalConstant
 	Informer informer;
 
 	@Override
-	public void puton(String bank, String putter, String what, String units, BigDecimal unitPrice,
+	public void puton(String bank, String putter, String what, BigDecimal unitPrice,
 			long thingsQuantities, String informAddress) {
 		PutonOrder order = new PutonOrder();
 		order.setCtime(System.currentTimeMillis());
@@ -55,14 +55,13 @@ public class CBankPutonOrderBS implements ICBankPutonOrderBS, BigDecimalConstant
 		order.setWhat(what);
 		order.setUnitPrice(unitPrice);
 		order.setThingsQuantities(thingsQuantities);
-		order.setUnits(units);
 		order.setInformAddress(informAddress);
 		// 保证金率
 		BigDecimal putonCashDepositRate = defaultPutonCashDepositRate(cbankPropertiesBS, bank);
-		order.setPutonCashDepositRate(putonCashDepositRate);
+		order.setCashDepositRate(putonCashDepositRate);
 		BigDecimal putonCashDepositAmount = unitPrice.multiply(new BigDecimal(thingsQuantities + ""))
 				.multiply(putonCashDepositRate);
-		order.setPutonCashDepositAmount(putonCashDepositAmount);
+		order.setCashDepositAmount(putonCashDepositAmount);
 
 		String code = cbankStore.bank(bank).saveDoc(TABEL_Puton, new TupleDocument<>(order));
 		order.setCode(code);
