@@ -18,6 +18,7 @@ public interface ICBankManagerStub {
 	@CjStubReturn(usage = "返回市场号")
 	@CjStubCircuitStatusMatches(status = {"405 error becuse exists bank`s name.","404 not found"})
 	String registerBank(@CjStubInParameter(key = "bankName", usage = "合约银行名") String bankName,
+			@CjStubInParameter(key = "fsbank", usage = "所绑定的金证银行") String fsbank,
 			@CjStubInParameter(key = "president", usage = "行长") String president,
 			@CjStubInParameter(key = "company", usage = "公司") String company,
 			@CjStubInParameter(key = "expiredDate", usage = "到期日期 格式：yyyy-MM-dd HH:mm，例：2019-10-30 09:45") String expiredDate)

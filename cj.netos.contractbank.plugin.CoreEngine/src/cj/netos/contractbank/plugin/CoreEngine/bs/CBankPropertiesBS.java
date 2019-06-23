@@ -15,11 +15,11 @@ import cj.studio.ecm.annotation.CjServiceRef;
 @CjService(name = "cbankPropertiesBS")
 public class CBankPropertiesBS implements ICBankPropertiesBS {
 	@CjServiceRef
-	ICBankStore bankStore;
+	ICBankStore cbankStore;
 
 	@Override
 	public void remove(String bank, String key) {
-		bankStore.home().deleteDocOne(TABLE_KEY, String.format("{'tuple.bank':'%s','tuple.key':'%s'}", bank, key));
+		cbankStore.home().deleteDocOne(TABLE_KEY, String.format("{'tuple.bank':'%s','tuple.key':'%s'}", bank, key));
 	}
 
 	@Override
@@ -28,12 +28,12 @@ public class CBankPropertiesBS implements ICBankPropertiesBS {
 			remove(bank, key);
 		}
 		CBankProperty property = new CBankProperty(bank, key, value, desc);
-		bankStore.home().saveDoc(TABLE_KEY, new TupleDocument<>(property));
+		cbankStore.home().saveDoc(TABLE_KEY, new TupleDocument<>(property));
 	}
 
 	@Override
 	public boolean containsKey(String bank, String key) {
-		return bankStore.home().tupleCount(TABLE_KEY, String.format("{'tuple.bank':'%s','tuple.key':'%s'}", bank, key)) > 0;
+		return cbankStore.home().tupleCount(TABLE_KEY, String.format("{'tuple.bank':'%s','tuple.key':'%s'}", bank, key)) > 0;
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class CBankPropertiesBS implements ICBankPropertiesBS {
 		String cjql = String.format(
 				"select {'tuple.desc':1} from tuple %s %s where {'tuple.bank':'%s','tuple.key':'%s'}", TABLE_KEY,
 				CBankProperty.class.getName(), bank, key);
-		IQuery<CBankProperty> q = bankStore.home().createQuery(cjql);
+		IQuery<CBankProperty> q = cbankStore.home().createQuery(cjql);
 		IDocument<CBankProperty> doc = q.getSingleResult();
 		if (doc == null)
 			return null;
@@ -52,7 +52,7 @@ public class CBankPropertiesBS implements ICBankPropertiesBS {
 	public String get(String bank, String key) {
 		String cjql = String.format("select {'tuple.value':1} from tuple %s %s where {'tuple.bank':'%s','tuple.key':'%s'}",
 				TABLE_KEY, CBankProperty.class.getName(), bank, key);
-		IQuery<CBankProperty> q = bankStore.home().createQuery(cjql);
+		IQuery<CBankProperty> q = cbankStore.home().createQuery(cjql);
 		IDocument<CBankProperty> doc = q.getSingleResult();
 		if (doc == null)
 			return null;
@@ -63,7 +63,7 @@ public class CBankPropertiesBS implements ICBankPropertiesBS {
 	public String[] enumKey(String bank) {
 		String cjql = String.format("select {'tuple.key':1} from tuple %s %s where {'tuple.bank':'%s'}", TABLE_KEY,
 				CBankProperty.class.getName(), bank);
-		IQuery<CBankProperty> q = bankStore.home().createQuery(cjql);
+		IQuery<CBankProperty> q = cbankStore.home().createQuery(cjql);
 		List<String> list = new ArrayList<String>();
 		List<IDocument<CBankProperty>> docs = q.getResultList();
 		for (IDocument<CBankProperty> doc : docs) {
@@ -77,7 +77,7 @@ public class CBankPropertiesBS implements ICBankPropertiesBS {
 		String cjql = String.format(
 				"select {'tuple.key':1}.limit(%s).skip(%s) from tuple %s %s where {'tuple.bank':'%s'}", pageSize,
 				currPage, TABLE_KEY, CBankProperty.class.getName(), bank);
-		IQuery<CBankProperty> q = bankStore.home().createQuery(cjql);
+		IQuery<CBankProperty> q = cbankStore.home().createQuery(cjql);
 		List<String> list = new ArrayList<String>();
 		List<IDocument<CBankProperty>> docs = q.getResultList();
 		for (IDocument<CBankProperty> doc : docs) {
@@ -88,7 +88,7 @@ public class CBankPropertiesBS implements ICBankPropertiesBS {
 
 	@Override
 	public long count(String bank) {
-		return bankStore.home().tupleCount(TABLE_KEY, String.format("{'tuple.bank':'%s'}", bank));
+		return cbankStore.home().tupleCount(TABLE_KEY, String.format("{'tuple.bank':'%s'}", bank));
 	}
 
 }

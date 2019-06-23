@@ -97,9 +97,6 @@ task release(type: Copy) {
 }
 release.dependsOn ":cj.netos.contractbank.stub:release"
 release.dependsOn ":cj.netos.contractbank.program:release"
-release.dependsOn ":cj.netos.contractbank.plugin.MaxEngine:release"
-release.dependsOn ":cj.netos.contractbank.plugin.MinEngine:release"
 release.dependsOn ":cj.netos.contractbank.plugin.CoreEngine:release"
-release.dependsOn ":cj.netos.contractbank.plugin.ProcurementEngine:release"
 tasks.getByPath(':cj.netos.contractbank.program:release').mustRunAfter tasks.getByPath(':cj.netos.contractbank.stub:release')
 

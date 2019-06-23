@@ -19,11 +19,11 @@ import cj.studio.ecm.net.CircuitException;
 @CjService(name = "cbankInfoBS")
 public class CBankInfoBS implements ICBankInfoBS {
 	@CjServiceRef
-	ICBankStore bankStore;
+	ICBankStore cbankStore;
 	@Override
 	public boolean existsCBankName(String name) {
 		String where = String.format("{'tuple.name':'%s'}", name);
-		return bankStore.home().tupleCount(TABLE_CBank_INFO, where) > 0;
+		return cbankStore.home().tupleCount(TABLE_CBank_INFO, where) > 0;
 	}
 
 	@Override
@@ -32,21 +32,21 @@ public class CBankInfoBS implements ICBankInfoBS {
 			throw new CircuitException("405", "已存在市场名为：" + info.getName());
 		}
 		info.setCode(null);
-		String id =  bankStore.home().saveDoc(TABLE_CBank_INFO, new TupleDocument<>(info));
+		String id =  cbankStore.home().saveDoc(TABLE_CBank_INFO, new TupleDocument<>(info));
 		info.setCode(id);
 	}
 
 	@Override
 	public boolean existsCBankCode(String market) {
 		String where = String.format("{'_id':ObjectId('%s')}", market);
-		return  bankStore.home().tupleCount(TABLE_CBank_INFO, where) > 0;
+		return  cbankStore.home().tupleCount(TABLE_CBank_INFO, where) > 0;
 	}
 
 	@Override
 	public CBankInfo getCBankInfo(String market) {
 		String cjql = String.format("select {'tuple':'*'} from tuple %s %s where {'_id':ObjectId('%s')}",
 				TABLE_CBank_INFO, CBankInfo.class.getName(), market);
-		IQuery<CBankInfo> q =  bankStore.home().createQuery(cjql);
+		IQuery<CBankInfo> q =  cbankStore.home().createQuery(cjql);
 		IDocument<CBankInfo> doc = q.getSingleResult();
 		if (doc == null)
 			return null;
@@ -58,7 +58,7 @@ public class CBankInfoBS implements ICBankInfoBS {
 	public List<CBankInfo> pageCBankInfo(int currPage, int pageSize) {
 		String cjql = String.format("select {'tuple':'*'}.limit(%s).skip(%s) from tuple %s %s where {}", pageSize,
 				currPage, TABLE_CBank_INFO, CBankInfo.class.getName());
-		IQuery<CBankInfo> q =  bankStore.home().createQuery(cjql);
+		IQuery<CBankInfo> q =  cbankStore.home().createQuery(cjql);
 		List<IDocument<CBankInfo>> docs = q.getResultList();
 		List<CBankInfo> list = new ArrayList<CBankInfo>();
 		for (IDocument<CBankInfo> doc : docs) {
@@ -72,21 +72,21 @@ public class CBankInfoBS implements ICBankInfoBS {
 	public void updateCBankName(String market, String name) {
 		Bson filter = Document.parse(String.format("{'_id':ObjectId('%s')}", market));
 		Bson update = Document.parse(String.format("{'$set':{'tuple.name':'%s'}}", name));
-		 bankStore.home().updateDocOne(TABLE_CBank_INFO, filter, update);
+		 cbankStore.home().updateDocOne(TABLE_CBank_INFO, filter, update);
 	}
 
 	@Override
 	public void updateCBankPresident(String market, String president) {
 		Bson filter = Document.parse(String.format("{'_id':ObjectId('%s')}", market));
 		Bson update = Document.parse(String.format("{'$set':{'tuple.president':'%s'}}", president));
-		 bankStore.home().updateDocOne(TABLE_CBank_INFO, filter, update);
+		 cbankStore.home().updateDocOne(TABLE_CBank_INFO, filter, update);
 	}
 
 	@Override
 	public void updateCBankCompany(String market, String company) {
 		Bson filter = Document.parse(String.format("{'_id':ObjectId('%s')}", market));
 		Bson update = Document.parse(String.format("{'$set':{'tuple.company':'%s'}}", company));
-		 bankStore.home().updateDocOne(TABLE_CBank_INFO, filter, update);
+		 cbankStore.home().updateDocOne(TABLE_CBank_INFO, filter, update);
 	}
 
 	@Override

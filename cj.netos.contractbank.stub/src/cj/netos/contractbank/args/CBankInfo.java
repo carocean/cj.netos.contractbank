@@ -3,6 +3,7 @@ package cj.netos.contractbank.args;
 public class CBankInfo {
 	String code;
 	String name;
+	String fsbank;//金证银行
 	String president;//行长
 	String company;//归属的公司
 	BState bstate;//市场运行状态：暂停，运行中
@@ -13,6 +14,12 @@ public class CBankInfo {
 	}
 	public void setCode(String code) {
 		this.code = code;
+	}
+	public String getFsbank() {
+		return fsbank;
+	}
+	public void setFsbank(String fsbank) {
+		this.fsbank = fsbank;
 	}
 	public String getName() {
 		return name;

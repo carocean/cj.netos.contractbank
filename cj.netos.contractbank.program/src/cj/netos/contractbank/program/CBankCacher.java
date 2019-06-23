@@ -8,7 +8,7 @@ import cj.netos.contractbank.bs.ICBankInfoBS;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
 
-@CjService(name = "marketCacher")
+@CjService(name = "cbankCacher")
 public class CBankCacher implements ICBankCacher {
 	@CjServiceRef(refByName = "FSBAEngine.cbankInfoBS")
 	ICBankInfoBS cbankInfoBS;

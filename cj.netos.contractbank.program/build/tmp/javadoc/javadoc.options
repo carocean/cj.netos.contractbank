@@ -15,4 +15,8 @@
 '/Users/caroceanjofers/studio/github/cj.netos.contractbank/cj.netos.contractbank.program/src/cj/netos/contractbank/program/ICBankCacher.java'
 '/Users/caroceanjofers/studio/github/cj.netos.contractbank/cj.netos.contractbank.program/src/cj/netos/contractbank/program/stub/CBankPropertiesStub.java'
 '/Users/caroceanjofers/studio/github/cj.netos.contractbank/cj.netos.contractbank.program/src/cj/netos/contractbank/program/stub/CBankManagerStub.java'
+'/Users/caroceanjofers/studio/github/cj.netos.contractbank/cj.netos.contractbank.program/src/cj/netos/contractbank/program/stub/CBankTransactionStub.java'
+'/Users/caroceanjofers/studio/github/cj.netos.contractbank/cj.netos.contractbank.program/src/cj/netos/contractbank/program/reciever/TestInformer.java'
+'/Users/caroceanjofers/studio/github/cj.netos.contractbank/cj.netos.contractbank.program/src/cj/netos/contractbank/program/reciever/transaction/PutonInformer.java'
 '/Users/caroceanjofers/studio/github/cj.netos.contractbank/cj.netos.contractbank.program/src/cj/netos/contractbank/program/reactor/MyReactorControllerVavle.java'
+'/Users/caroceanjofers/studio/github/cj.netos.contractbank/cj.netos.contractbank.program/src/cj/netos/contractbank/program/reactor/transaction/PutonOrderValve.java'

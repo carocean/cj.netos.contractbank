@@ -9,7 +9,7 @@ import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.ecm.annotation.CjServiceSite;
 
-@CjService(name = "bankStore")
+@CjService(name = "cbankStore")
 public class CBankStore implements ICBankStore {
 	@CjServiceSite
 	IServiceSite site;

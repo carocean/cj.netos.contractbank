@@ -1,6 +1,7 @@
 package cj.netos.contractbank.args;
 
 public class CBankProperty {
+	public static transient final String CONSTANS_KEY_default_putonCashDepositRate = "defaults.putonCashDepositRate";
 	String key;
 	String value;
 	String desc;

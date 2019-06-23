@@ -1,1 +1,1 @@
-{"valids":[{"name":"cbank","uris":["app://contractbank:way"],"props":{}}],"invalids":[]}
+{"valids":[{"name":"/remote/fsbank/","uris":["http://localhost:20000"],"props":{}},{"name":"cbank","uris":["app://contractbank:way"],"props":{}}],"invalids":[]}

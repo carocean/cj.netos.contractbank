@@ -26,10 +26,13 @@ public class CBankManagerStub extends GatewayAppSiteRestStub implements ICBankMa
 	ICBankStateBS cbankStateBS;
 
 	@Override
-	public String registerBank(String bankName, String president, String company, String expiredDate)
+	public String registerBank(String bankName,String fsbank, String president, String company, String expiredDate)
 			throws CircuitException {
 		if (StringUtil.isEmpty(bankName)) {
 			throw new CircuitException("404", String.format("市场名为空"));
+		}
+		if (StringUtil.isEmpty(fsbank)) {
+			throw new CircuitException("404", String.format("金证银行为空"));
 		}
 		if (StringUtil.isEmpty(president)) {
 			throw new CircuitException("404", String.format("场长为空"));
@@ -40,6 +43,7 @@ public class CBankManagerStub extends GatewayAppSiteRestStub implements ICBankMa
 
 		CBankInfo info = new CBankInfo();
 		info.setCode(null);
+		info.setFsbank(fsbank);
 		info.setPresident(president);
 		info.setCompany(company);
 		info.setName(bankName);
