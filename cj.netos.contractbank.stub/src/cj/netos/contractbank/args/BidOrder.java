@@ -2,35 +2,40 @@ package cj.netos.contractbank.args;
 
 import java.math.BigDecimal;
 
-public class BuyOrder {
+public class BidOrder {
 	String code;
-	String buyer;
-	Position position;
+	String bidder;
 	long thingsQuantities;//委托买入数量
-	BigDecimal buyingPrice;
+	BigDecimal biddingPrice;
 	BigDecimal cashDepositRate;// 保证金率
 	BigDecimal cashDepositAmount;// 实交保证金
 	BigDecimal bondPrice;// 购买金证债券价格
 	BigDecimal bondQuantities;// 购买的金证债券数量
 	String informAddress;
 	long ctime;
+	String status;//向撮合引擎提交状态,如果不是200则表示未提交成功，则需提交
+	String message;
+	public BidOrder() {
+		this.status="200";
+		this.message="ok";
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public String getCode() {
 		return code;
 	}
 	public void setCode(String code) {
 		this.code = code;
-	}
-	public String getBuyer() {
-		return buyer;
-	}
-	public void setBuyer(String buyer) {
-		this.buyer = buyer;
-	}
-	public Position getPosition() {
-		return position;
-	}
-	public void setPosition(Position position) {
-		this.position = position;
 	}
 	public long getThingsQuantities() {
 		return thingsQuantities;
@@ -38,11 +43,18 @@ public class BuyOrder {
 	public void setThingsQuantities(long thingsQuantities) {
 		this.thingsQuantities = thingsQuantities;
 	}
-	public BigDecimal getBuyingPrice() {
-		return buyingPrice;
+	
+	public String getBidder() {
+		return bidder;
 	}
-	public void setBuyingPrice(BigDecimal buyingPrice) {
-		this.buyingPrice = buyingPrice;
+	public void setBidder(String bidder) {
+		this.bidder = bidder;
+	}
+	public BigDecimal getBiddingPrice() {
+		return biddingPrice;
+	}
+	public void setBiddingPrice(BigDecimal biddingPrice) {
+		this.biddingPrice = biddingPrice;
 	}
 	public BigDecimal getCashDepositRate() {
 		return cashDepositRate;

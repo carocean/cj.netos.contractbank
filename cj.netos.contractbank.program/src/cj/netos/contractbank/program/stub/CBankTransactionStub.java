@@ -2,7 +2,6 @@ package cj.netos.contractbank.program.stub;
 
 import java.math.BigDecimal;
 
-import cj.netos.contractbank.args.Position;
 import cj.netos.contractbank.stub.ICBankTransactionStub;
 import cj.studio.ecm.IServiceSite;
 import cj.studio.ecm.annotation.CjService;
@@ -38,28 +37,14 @@ public class CBankTransactionStub extends GatewayAppSiteRestStub implements ICBa
 	}
 
 	@Override
-	public void buyOrder(String bank, String buyer, Position position, long thingsQuantities, BigDecimal buyingPrice,
+	public void bidOrder(String bank, String bidder,  long thingsQuantities, BigDecimal biddingPrice,
 			String informAddress) {
 		IReactor reactor = getReactor();
-		Event e = new Event(bank, "transaction.buyOrder");
+		Event e = new Event(bank, "transaction.bidOrder");
 		e.getParameters().put("informAddress", informAddress);
-		e.getParameters().put("buyer", buyer);
-		e.getParameters().put("position", position);
+		e.getParameters().put("bidder", bidder);
 		e.getParameters().put("thingsQuantities", thingsQuantities);
-		e.getParameters().put("buyingPrice", buyingPrice);
-		reactor.input(e);
-	}
-
-	@Override
-	public void sellOrder(String bank, String seller, Position position, long thingsQuantities, BigDecimal sellingPrice,
-			String informAddress) {
-		IReactor reactor = getReactor();
-		Event e = new Event(bank, "transaction.sellOrder");
-		e.getParameters().put("informAddress", informAddress);
-		e.getParameters().put("seller", seller);
-		e.getParameters().put("position", position);
-		e.getParameters().put("sellingPrice", sellingPrice);
-		e.getParameters().put("thingsQuantities", thingsQuantities);
+		e.getParameters().put("biddingPrice", biddingPrice);
 		reactor.input(e);
 	}
 

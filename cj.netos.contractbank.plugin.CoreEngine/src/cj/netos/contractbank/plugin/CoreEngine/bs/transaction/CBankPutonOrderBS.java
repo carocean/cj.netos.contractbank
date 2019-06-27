@@ -18,6 +18,10 @@ import cj.netos.contractbank.plugin.CoreEngine.db.ICBankStore;
 import cj.netos.contractbank.util.BigDecimalConstants;
 import cj.netos.fsbank.stub.IFSBankTransactionStub;
 import cj.netos.inform.Informer;
+import cj.netos.x.dealmaking.args.Actor;
+import cj.netos.x.dealmaking.args.PutonOrderStock;
+import cj.netos.x.dealmaking.stub.IDeliveryQueueStub;
+import cj.studio.ecm.CJSystem;
 import cj.studio.ecm.IServiceSite;
 import cj.studio.ecm.annotation.CjBridge;
 import cj.studio.ecm.annotation.CjService;
@@ -39,6 +43,8 @@ public class CBankPutonOrderBS implements ICBankPutonOrderBS, BigDecimalConstant
 	ICBankPropertiesBS cbankPropertiesBS;
 	@CjStubRef(remote = "rest://remote/fsbank/", stub = IFSBankTransactionStub.class)
 	IFSBankTransactionStub fSBankTransactionStub;
+	@CjStubRef(remote = "rest://remote/xdm/", stub = IDeliveryQueueStub.class)
+	IDeliveryQueueStub deliveryQueueStub;
 	@CjServiceRef
 	ICBankInfoBS cbankInfoBS;
 	@CjServiceSite
@@ -47,8 +53,8 @@ public class CBankPutonOrderBS implements ICBankPutonOrderBS, BigDecimalConstant
 	Informer informer;
 
 	@Override
-	public void puton(String bank, String putter, String what, BigDecimal unitPrice,
-			long thingsQuantities, String informAddress) {
+	public void puton(String bank, String putter, String what, BigDecimal unitPrice, long thingsQuantities,
+			String informAddress) {
 		PutonOrder order = new PutonOrder();
 		order.setCtime(System.currentTimeMillis());
 		order.setPutter(putter);
@@ -87,21 +93,56 @@ public class CBankPutonOrderBS implements ICBankPutonOrderBS, BigDecimalConstant
 				response.get("dealBondPrice"), response.get("bondQuantities")));
 		this.cbankStore.bank(bank).updateDocOne(TABEL_Puton, filter, update);
 		PutonOrder order = getPutonOrder(bank, orderno);
+
+		PutonOrderStock stock = new PutonOrderStock();
+		stock.setBondQuantities(order.getBondQuantities());
+		stock.setOrderno(order.getCode());
+		stock.setPutter(order.getPutter());
+		stock.setPuttingPrice(order.getUnitPrice());
+		stock.setPuttingQuantities(order.getThingsQuantities());
+		stock.setOtime(System.currentTimeMillis());
+		String actor =site.getProperty("contract.actor");
+		stock.setActor(Actor.valueOf(actor));
+		try {
+			deliveryQueueStub.putonQueue(bank, stock);
+		} catch (Exception e) {
+			CircuitException ce = CircuitException.search(e);
+			String status = "";
+			String message = String.format("提交到撮合交易引擎出错，原因：%s", e);
+			if (ce != null) {
+				status = ce.getStatus();
+			} else {
+				status = "500";
+			}
+			updateStatus(bank, order.getCode(), status, message);
+			order.setStatus(status);
+			order.setMessage(message);
+			CJSystem.logging().error(getClass(), message);
+		}
+
 		String informAddress = order.getInformAddress();
 		if (!StringUtil.isEmpty(informAddress)) {
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("order",order);
+			map.put("order", order);
 			Frame f = informer.createFrame(informAddress, map);
 			MemoryOutputChannel oc = new MemoryOutputChannel();
 			Circuit c = new Circuit(oc, "http/1.1 200 ok");
 			informer.inform(f, c);
 		}
 	}
+
+	private void updateStatus(String bank, String orderno, String status, String message) {
+		Bson filter = Document.parse(String.format("{'_id':ObjectId('%s')}", orderno));
+		Bson update = Document
+				.parse(String.format("{'$set':{'tuple.message':'%s','tuple.status':'%s'}}", message, status));
+		this.cbankStore.bank(bank).updateDocOne(TABEL_Puton, filter, update);
+	}
+
 	@Override
 	public PutonOrder getPutonOrder(String bank, String orderno) {
-		String cjql = String.format("select {'tuple':'*'} from tuple %s %s where {'_id':ObjectId('%s')}",
-				TABEL_Puton, PutonOrder.class.getName(), orderno);
-		IQuery<PutonOrder> q =  cbankStore.bank(bank).createQuery(cjql);
+		String cjql = String.format("select {'tuple':'*'} from tuple %s %s where {'_id':ObjectId('%s')}", TABEL_Puton,
+				PutonOrder.class.getName(), orderno);
+		IQuery<PutonOrder> q = cbankStore.bank(bank).createQuery(cjql);
 		IDocument<PutonOrder> doc = q.getSingleResult();
 		if (doc == null)
 			return null;

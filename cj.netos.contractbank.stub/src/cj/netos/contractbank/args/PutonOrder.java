@@ -20,7 +20,24 @@ public class PutonOrder {
 	BigDecimal bondQuantities;// 购买的金证债券数量
 	long ctime;// 投单时间
 	String informAddress;// 回调地址
-
+	String status;//向撮合引擎提交状态,如果不是200则表示未提交成功，则需提交
+	String message;
+	public PutonOrder() {
+		this.status="200";
+		this.message="ok";
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public String getCode() {
 		return code;
 	}

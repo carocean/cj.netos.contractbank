@@ -2,7 +2,6 @@ package cj.netos.contractbank.stub;
 
 import java.math.BigDecimal;
 
-import cj.netos.contractbank.args.Position;
 import cj.studio.gateway.stub.annotation.CjStubInParameter;
 import cj.studio.gateway.stub.annotation.CjStubMethod;
 import cj.studio.gateway.stub.annotation.CjStubService;
@@ -21,20 +20,10 @@ public interface ICBankTransactionStub {
 
 	// 委托买单
 	@CjStubMethod(usage = "委托买单")
-	void buyOrder(@CjStubInParameter(key = "bank", usage = "合约银行行号") String bank,
-			@CjStubInParameter(key = "buyer", usage = "委托买入者编号") String buyer,
-			@CjStubInParameter(key = "position", usage = "开平仓。注意：小额交易规则不支持平仓") Position position,
+	void bidOrder(@CjStubInParameter(key = "bank", usage = "合约银行行号") String bank,
+			@CjStubInParameter(key = "bidder", usage = "委托买入者编号") String bidder,
 			@CjStubInParameter(key = "thingsQuantities", usage = "委托申购数量") long thingsQuantities,
-			@CjStubInParameter(key = "buyingPrice", usage = "委托申购价格") BigDecimal buyingPrice,
-			@CjStubInParameter(key = "informAddress", usage = "回调通知地址") String informAddress);
-
-	// 委托卖单
-	@CjStubMethod(usage = "委托卖单")
-	void sellOrder(@CjStubInParameter(key = "bank", usage = "合约银行行号") String bank,
-			@CjStubInParameter(key = "seller", usage = "委托卖出者编号") String seller,
-			@CjStubInParameter(key = "position", usage = "开平仓。注意：小额交易规则不支持平仓") Position position,
-			@CjStubInParameter(key = "thingsQuantities", usage = "委托出售的东西数量") long thingsQuantities,
-			@CjStubInParameter(key = "sellingPrice", usage = "委托售价") BigDecimal sellingPrice,
+			@CjStubInParameter(key = "biddingPrice", usage = "委托申购价格") BigDecimal biddingPrice,
 			@CjStubInParameter(key = "informAddress", usage = "回调通知地址") String informAddress);
 
 	// 委托合约银行向金证银行承兑
