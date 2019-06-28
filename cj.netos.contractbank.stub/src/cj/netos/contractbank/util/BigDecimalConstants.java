@@ -13,12 +13,30 @@ public interface BigDecimalConstants {
 	static String default_putonCashDepositRate = "0.20";// 默认投放保证金率
 	static String default_bidCashDepositRate = "0.16";// 默认委托买单保证金率
 	static String default_exchangeFeeRate = "0.05";// 默认委托承兑收取费率
-	static String default_contract_actor = "seller";//#the contract.actor value is seller or purchaser
-	default String contract_actor(ICBankPropertiesBS cbankPropertiesBS, String bank) {
+	static String default_contract_breakRate = "0.05";// 交割期间违约的处罚比率
+	static String default_contract_expiredTimeWin = "43200000";// 交割时间窗12小时
+	static String default_contract_dealType = "goods";
+	public default long contract_ExpiredTimeWin(ICBankPropertiesBS cbankPropertiesBS, String bank) {
+		String contract_ExpireTimeWin = cbankPropertiesBS.get(bank,
+				CBankProperty.CONSTANS_KEY_policy_contract_expiredTimeWin);
+		if (StringUtil.isEmpty(contract_ExpireTimeWin)) {
+			contract_ExpireTimeWin = default_contract_expiredTimeWin + "";
+		}
+		return Long.valueOf(contract_ExpireTimeWin);
+	} 
+	public default BigDecimal contract_contract_breakRate(ICBankPropertiesBS cbankPropertiesBS, String bank) {
+		String contract_ExpireTimeWin = cbankPropertiesBS.get(bank,
+				CBankProperty.CONSTANS_KEY_policy_contract_breakRate);
+		if (StringUtil.isEmpty(contract_ExpireTimeWin)) {
+			contract_ExpireTimeWin = default_contract_breakRate + "";
+		}
+		return new BigDecimal(contract_ExpireTimeWin);
+	} 
+	public default String contract_dealType(ICBankPropertiesBS cbankPropertiesBS, String bank) {
 		String contract_actor = cbankPropertiesBS.get(bank,
-				CBankProperty.CONSTANS_KEY_default_contract_actor);
+				CBankProperty.CONSTANS_KEY_policy_contract_dealType);
 		if (StringUtil.isEmpty(contract_actor)) {
-			contract_actor = default_contract_actor + "";
+			contract_actor = default_contract_dealType + "";
 		}
 		return contract_actor;
 	} 
@@ -28,9 +46,9 @@ public interface BigDecimalConstants {
 	 * @param bank
 	 * @return
 	 */
-	default BigDecimal putonCashDepositRate(ICBankPropertiesBS cbankPropertiesBS, String bank) {
+	public default BigDecimal putonCashDepositRate(ICBankPropertiesBS cbankPropertiesBS, String bank) {
 		String strdefault_putonCashDepositRate = cbankPropertiesBS.get(bank,
-				CBankProperty.CONSTANS_KEY_default_putonCashDepositRate);
+				CBankProperty.CONSTANS_KEY_policy_putonCashDepositRate);
 		if (StringUtil.isEmpty(strdefault_putonCashDepositRate)) {
 			strdefault_putonCashDepositRate = default_putonCashDepositRate + "";
 		}
@@ -43,9 +61,9 @@ public interface BigDecimalConstants {
 	 * @param bank
 	 * @return
 	 */
-	default BigDecimal bidCashDepositRate(ICBankPropertiesBS cbankPropertiesBS, String bank) {
+	public default BigDecimal bidCashDepositRate(ICBankPropertiesBS cbankPropertiesBS, String bank) {
 		String strdefault_putonCashDepositRate = cbankPropertiesBS.get(bank,
-				CBankProperty.CONSTANS_KEY_default_bidCashDepositRate);
+				CBankProperty.CONSTANS_KEY_policy_bidCashDepositRate);
 		if (StringUtil.isEmpty(strdefault_putonCashDepositRate)) {
 			strdefault_putonCashDepositRate = default_bidCashDepositRate + "";
 		}
@@ -57,9 +75,9 @@ public interface BigDecimalConstants {
 	 * @param bank
 	 * @return
 	 */
-	default BigDecimal exchangeFeeRate(ICBankPropertiesBS cbankPropertiesBS, String bank) {
+	public default BigDecimal exchangeFeeRate(ICBankPropertiesBS cbankPropertiesBS, String bank) {
 		String strdefault_putonCashDepositRate = cbankPropertiesBS.get(bank,
-				CBankProperty.CONSTANS_KEY_default_exchangeFeeRate);
+				CBankProperty.CONSTANS_KEY_policy_exchangeFeeRate);
 		if (StringUtil.isEmpty(strdefault_putonCashDepositRate)) {
 			strdefault_putonCashDepositRate = default_exchangeFeeRate + "";
 		}

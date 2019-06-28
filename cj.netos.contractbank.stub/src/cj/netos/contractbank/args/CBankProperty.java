@@ -1,10 +1,12 @@
 package cj.netos.contractbank.args;
 
 public class CBankProperty {
-	public static transient final String CONSTANS_KEY_default_putonCashDepositRate = "defaults.putonCashDepositRate";
-	public static transient final String CONSTANS_KEY_default_bidCashDepositRate = "defaults.bidCashDepositRate";
-	public static transient final String CONSTANS_KEY_default_exchangeFeeRate = "defaults.exchangeFeeRate";
-	public static transient final String CONSTANS_KEY_default_contract_actor = "defaults.contractActor";
+	public static transient final String CONSTANS_KEY_policy_putonCashDepositRate = "policy.putonCashDepositRate";
+	public static transient final String CONSTANS_KEY_policy_bidCashDepositRate = "policy.bidCashDepositRate";
+	public static transient final String CONSTANS_KEY_policy_exchangeFeeRate = "policy.exchangeFeeRate";
+	public static transient final String CONSTANS_KEY_policy_contract_dealType = "policy.contract.dealType";
+	public static transient final String CONSTANS_KEY_policy_contract_expiredTimeWin = "policy.contract.expiredWin";
+	public static transient final String CONSTANS_KEY_policy_contract_breakRate =  "policy.contract.breakRate";
 	String key;
 	String value;
 	String desc;

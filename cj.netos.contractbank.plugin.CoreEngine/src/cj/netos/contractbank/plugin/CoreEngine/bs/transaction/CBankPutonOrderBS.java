@@ -18,7 +18,7 @@ import cj.netos.contractbank.plugin.CoreEngine.db.ICBankStore;
 import cj.netos.contractbank.util.BigDecimalConstants;
 import cj.netos.fsbank.stub.IFSBankTransactionStub;
 import cj.netos.inform.Informer;
-import cj.netos.x.dealmaking.args.Actor;
+import cj.netos.x.dealmaking.args.DealType;
 import cj.netos.x.dealmaking.args.PutonOrderStock;
 import cj.netos.x.dealmaking.stub.IDeliveryQueueStub;
 import cj.studio.ecm.CJSystem;
@@ -101,8 +101,9 @@ public class CBankPutonOrderBS implements ICBankPutonOrderBS, BigDecimalConstant
 		stock.setPuttingPrice(order.getUnitPrice());
 		stock.setPuttingQuantities(order.getThingsQuantities());
 		stock.setOtime(System.currentTimeMillis());
-		String actor =contract_actor(cbankPropertiesBS, bank);
-		stock.setActor(Actor.valueOf(actor));
+		String dealtype =contract_dealType(cbankPropertiesBS, bank);
+		stock.setDealType(DealType.valueOf(dealtype));
+		stock.setCashDepositRate(order.getCashDepositRate());
 		try {
 			deliveryQueueStub.putonQueue(bank, stock);
 		} catch (Exception e) {

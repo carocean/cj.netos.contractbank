@@ -96,6 +96,7 @@ public class CBankBidOrderBS implements ICBankBidOrderBS, BigDecimalConstants {
 		stock.setBiddingPrice(order.getBiddingPrice());
 		stock.setBiddingQuantities(order.getThingsQuantities());
 		stock.setOtime(System.currentTimeMillis());
+		stock.setCashDepositRate(order.getCashDepositRate());
 		try {
 			deliveryQueueStub.biddingQueue(bank, stock);
 		} catch (Exception e) {
