@@ -4,6 +4,7 @@ public class CBankProperty {
 	public static transient final String CONSTANS_KEY_default_putonCashDepositRate = "defaults.putonCashDepositRate";
 	public static transient final String CONSTANS_KEY_default_bidCashDepositRate = "defaults.bidCashDepositRate";
 	public static transient final String CONSTANS_KEY_default_exchangeFeeRate = "defaults.exchangeFeeRate";
+	public static transient final String CONSTANS_KEY_default_contract_actor = "defaults.contractActor";
 	String key;
 	String value;
 	String desc;

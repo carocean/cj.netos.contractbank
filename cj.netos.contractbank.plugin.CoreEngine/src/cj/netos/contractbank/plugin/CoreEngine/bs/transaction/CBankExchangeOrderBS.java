@@ -53,7 +53,7 @@ public class CBankExchangeOrderBS implements ICBankExchangeOrderBS, BigDecimalCo
 		order.setExchanger(exchanger);
 		order.setCtime(System.currentTimeMillis());
 		order.setInformAddress(informAddress);
-		BigDecimal feeRate = defaultExchangeFeeRate(cbankPropertiesBS, bank);
+		BigDecimal feeRate = exchangeFeeRate(cbankPropertiesBS, bank);
 		order.setFeeRate(feeRate);
 
 		String code = cbankStore.bank(bank).saveDoc(TABEL_Exchange, new TupleDocument<>(order));

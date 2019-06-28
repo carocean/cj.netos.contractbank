@@ -60,7 +60,7 @@ public class CBankBidOrderBS implements ICBankBidOrderBS, BigDecimalConstants {
 		order.setThingsQuantities(thingsQuantities);
 		order.setCtime(System.currentTimeMillis());
 
-		BigDecimal bidCashDepositRate = defaultBidCashDepositRate(cbankPropertiesBS, bank);
+		BigDecimal bidCashDepositRate = bidCashDepositRate(cbankPropertiesBS, bank);
 		order.setCashDepositRate(bidCashDepositRate);
 		BigDecimal bidCashDepositAmount = biddingPrice.multiply(new BigDecimal(thingsQuantities + ""))
 				.multiply(bidCashDepositRate);

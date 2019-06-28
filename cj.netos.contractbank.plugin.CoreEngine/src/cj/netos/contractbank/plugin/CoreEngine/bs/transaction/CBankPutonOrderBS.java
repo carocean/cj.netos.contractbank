@@ -63,7 +63,7 @@ public class CBankPutonOrderBS implements ICBankPutonOrderBS, BigDecimalConstant
 		order.setThingsQuantities(thingsQuantities);
 		order.setInformAddress(informAddress);
 		// 保证金率
-		BigDecimal putonCashDepositRate = defaultPutonCashDepositRate(cbankPropertiesBS, bank);
+		BigDecimal putonCashDepositRate = putonCashDepositRate(cbankPropertiesBS, bank);
 		order.setCashDepositRate(putonCashDepositRate);
 		BigDecimal putonCashDepositAmount = unitPrice.multiply(new BigDecimal(thingsQuantities + ""))
 				.multiply(putonCashDepositRate);
@@ -101,7 +101,7 @@ public class CBankPutonOrderBS implements ICBankPutonOrderBS, BigDecimalConstant
 		stock.setPuttingPrice(order.getUnitPrice());
 		stock.setPuttingQuantities(order.getThingsQuantities());
 		stock.setOtime(System.currentTimeMillis());
-		String actor =site.getProperty("contract.actor");
+		String actor =contract_actor(cbankPropertiesBS, bank);
 		stock.setActor(Actor.valueOf(actor));
 		try {
 			deliveryQueueStub.putonQueue(bank, stock);

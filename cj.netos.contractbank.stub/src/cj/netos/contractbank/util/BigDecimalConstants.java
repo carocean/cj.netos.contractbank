@@ -13,13 +13,22 @@ public interface BigDecimalConstants {
 	static String default_putonCashDepositRate = "0.20";// 默认投放保证金率
 	static String default_bidCashDepositRate = "0.16";// 默认委托买单保证金率
 	static String default_exchangeFeeRate = "0.05";// 默认委托承兑收取费率
+	static String default_contract_actor = "seller";//#the contract.actor value is seller or purchaser
+	default String contract_actor(ICBankPropertiesBS cbankPropertiesBS, String bank) {
+		String contract_actor = cbankPropertiesBS.get(bank,
+				CBankProperty.CONSTANS_KEY_default_contract_actor);
+		if (StringUtil.isEmpty(contract_actor)) {
+			contract_actor = default_contract_actor + "";
+		}
+		return contract_actor;
+	} 
 	/**
 	 * 向委托投单收取的保证金率
 	 * @param marketPropertiesBS
 	 * @param bank
 	 * @return
 	 */
-	default BigDecimal defaultPutonCashDepositRate(ICBankPropertiesBS cbankPropertiesBS, String bank) {
+	default BigDecimal putonCashDepositRate(ICBankPropertiesBS cbankPropertiesBS, String bank) {
 		String strdefault_putonCashDepositRate = cbankPropertiesBS.get(bank,
 				CBankProperty.CONSTANS_KEY_default_putonCashDepositRate);
 		if (StringUtil.isEmpty(strdefault_putonCashDepositRate)) {
@@ -34,7 +43,7 @@ public interface BigDecimalConstants {
 	 * @param bank
 	 * @return
 	 */
-	default BigDecimal defaultBidCashDepositRate(ICBankPropertiesBS cbankPropertiesBS, String bank) {
+	default BigDecimal bidCashDepositRate(ICBankPropertiesBS cbankPropertiesBS, String bank) {
 		String strdefault_putonCashDepositRate = cbankPropertiesBS.get(bank,
 				CBankProperty.CONSTANS_KEY_default_bidCashDepositRate);
 		if (StringUtil.isEmpty(strdefault_putonCashDepositRate)) {
@@ -48,7 +57,7 @@ public interface BigDecimalConstants {
 	 * @param bank
 	 * @return
 	 */
-	default BigDecimal defaultExchangeFeeRate(ICBankPropertiesBS cbankPropertiesBS, String bank) {
+	default BigDecimal exchangeFeeRate(ICBankPropertiesBS cbankPropertiesBS, String bank) {
 		String strdefault_putonCashDepositRate = cbankPropertiesBS.get(bank,
 				CBankProperty.CONSTANS_KEY_default_exchangeFeeRate);
 		if (StringUtil.isEmpty(strdefault_putonCashDepositRate)) {
