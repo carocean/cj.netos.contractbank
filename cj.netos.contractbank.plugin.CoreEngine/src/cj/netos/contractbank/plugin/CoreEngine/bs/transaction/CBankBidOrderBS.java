@@ -74,7 +74,8 @@ public class CBankBidOrderBS implements ICBankBidOrderBS, BigDecimalConstants {
 		try {
 			// 合约银行关联的金证银行
 			String fsbankno = this.cbankInfoBS.getCBankInfo(bank).getFsbank();
-			fSBankTransactionStub.deposit(fsbankno, bidder, bidCashDepositAmount, fsbankInformAddress);
+			BigDecimal rebateRate=rebateRate(cbankPropertiesBS, bank);
+			fSBankTransactionStub.deposit(fsbankno, bidder, bidCashDepositAmount,rebateRate, fsbankInformAddress);
 		} catch (Exception e) {
 			cbankStore.bank(bank).deleteDoc(TABEL_Bid, code);
 			throw e;

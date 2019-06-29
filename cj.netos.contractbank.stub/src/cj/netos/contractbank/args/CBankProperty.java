@@ -7,6 +7,7 @@ public class CBankProperty {
 	public static transient final String CONSTANS_KEY_policy_contract_dealType = "policy.contract.dealType";
 	public static transient final String CONSTANS_KEY_policy_contract_expiredTimeWin = "policy.contract.expiredWin";
 	public static transient final String CONSTANS_KEY_policy_contract_breakRate =  "policy.contract.breakRate";
+	public static transient final String CONSTANS_KEY_policy_rebateRate = "policy.rebateRate";
 	String key;
 	String value;
 	String desc;

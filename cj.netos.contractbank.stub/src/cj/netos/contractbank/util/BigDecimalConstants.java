@@ -16,6 +16,15 @@ public interface BigDecimalConstants {
 	static String default_contract_breakRate = "0.05";// 交割期间违约的处罚比率
 	static String default_contract_expiredTimeWin = "43200000";// 交割时间窗12小时
 	static String default_contract_dealType = "goods";
+	static String default_rebateRate = "0.25";
+	public default BigDecimal rebateRate(ICBankPropertiesBS cbankPropertiesBS, String bank) {
+		String rebateRate = cbankPropertiesBS.get(bank,
+				CBankProperty.CONSTANS_KEY_policy_rebateRate);
+		if (StringUtil.isEmpty(rebateRate)) {
+			rebateRate = default_rebateRate + "";
+		}
+		return new BigDecimal(rebateRate);
+	} 
 	public default long contract_ExpiredTimeWin(ICBankPropertiesBS cbankPropertiesBS, String bank) {
 		String contract_ExpireTimeWin = cbankPropertiesBS.get(bank,
 				CBankProperty.CONSTANS_KEY_policy_contract_expiredTimeWin);

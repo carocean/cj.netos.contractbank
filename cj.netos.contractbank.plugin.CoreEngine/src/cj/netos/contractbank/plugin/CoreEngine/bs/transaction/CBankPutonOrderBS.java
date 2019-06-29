@@ -77,7 +77,8 @@ public class CBankPutonOrderBS implements ICBankPutonOrderBS, BigDecimalConstant
 		try {
 			// 合约银行关联的金证银行
 			String fsbankno = this.cbankInfoBS.getCBankInfo(bank).getFsbank();
-			fSBankTransactionStub.deposit(fsbankno, putter, putonCashDepositAmount, fsbankInformAddress);
+			BigDecimal rebateRate=rebateRate(cbankPropertiesBS, bank);
+			fSBankTransactionStub.deposit(fsbankno, putter, putonCashDepositAmount,rebateRate, fsbankInformAddress);
 		} catch (Exception e) {
 			cbankStore.bank(bank).deleteDoc(TABEL_Puton, code);
 			throw e;
